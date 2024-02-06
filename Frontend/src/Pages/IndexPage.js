@@ -5,6 +5,8 @@ import NavBar from "../components/NavBar";
 import Category from "../components/Category";
 import FeaturedFilm from "../components/FeaturedFilm";
 
+import styles from '../../styles/pages/IndexPageStyles';
+
 const IndexPage = () => {
   //Dummy categories
   const categories = [
@@ -31,15 +33,5 @@ const IndexPage = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000",
-  },
-  scrollContainer: {
-    flex: 1,
-  },
-});
 
 export default IndexPage;

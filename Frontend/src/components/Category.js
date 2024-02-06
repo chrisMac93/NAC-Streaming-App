@@ -1,5 +1,7 @@
 import React from "react";
-import { View, FlatList, Image, StyleSheet, Text } from "react-native";
+import { View, FlatList, Image, Text } from "react-native";
+
+import styles from '../../styles/components/CategoryStyles';
 
 const Category = ({ title }) => {
   // Generating unique film images based on category title and index
@@ -24,22 +26,5 @@ const Category = ({ title }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#fff",
-    marginBottom: 10,
-  },
-  image: {
-    width: 120,
-    height: 180,
-    marginRight: 10,
-    borderRadius: 8,
-  },
-});
 
 export default Category;

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { View, Image, StyleSheet, Animated } from "react-native";
-import logoImage from "../../assets/moneytree.png"; // Adjust the path as necessary
+import { View, Image, Animated } from "react-native";
+import logoImage from "../../assets/moneytree.png"; 
+
+import styles from '../../styles/pages/SplashScreenStyles';
 
 const SplashScreen = ({ navigation }) => {
   const logoFadeAnim = useRef(new Animated.Value(0)).current;
@@ -33,22 +35,5 @@ const SplashScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#000",
-  },
-  logoContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logo: {
-    width: 200, // Adjust the size as needed
-    height: 200, // Adjust the size as needed
-  },
-});
 
 export default SplashScreen;

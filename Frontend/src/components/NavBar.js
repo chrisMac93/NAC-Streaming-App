@@ -1,9 +1,11 @@
 import React from "react";
 import { useUser } from "../Context/UserContext";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import profileImage from '../../assets/UserProfilePics/5.png';
+
+import styles from '../../styles/components/NavBarStyles';
 
 const NavBar = () => {
   const { currentUser } = useUser();
@@ -60,26 +62,5 @@ const NavBar = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  navBar: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#000",
-    height: 60,
-  },
-  navItem: {
-    alignItems: "center",
-  },
-  navText: {
-    fontSize: 12,
-  },
-  profilePic: {
-    width: 30, // Adjust as needed
-    height: 30, // Adjust as needed
-    borderRadius: 15, // Half of width/height to make it circular
-  },
-});
 
 export default NavBar;

@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import featureImage from "../../assets/Main.jpg";
+import FullScreenVideoPlayer from "../Pages/FullScreenVideoPlayer";
 
 const windowWidth = Dimensions.get("window").width; // Get window width
 
@@ -29,7 +30,7 @@ const FeaturedFilm = () => {
         </View>
         {/* Right Button */}
         <View style={styles.buttonContainerRight}>
-          <TouchableOpacity style={[styles.button, styles.playButton]}>
+          <TouchableOpacity style={[styles.button, styles.playButton]} onPress={() => navigation.navigate("FSVideoPlayer")}>
             <Icon name="play-arrow" size={20} color="#fff" />
             <Text style={styles.buttonText}>Play</Text>
           </TouchableOpacity>

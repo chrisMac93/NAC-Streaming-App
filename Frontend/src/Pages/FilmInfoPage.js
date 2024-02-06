@@ -1,5 +1,5 @@
 // src/pages/FilmInfoPage.js
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { Video } from "expo-av";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import FilmData from "../../assets/Json/filmData.json";
@@ -18,6 +18,23 @@ const FilmInfoPage = () => {
   const [muted, setMuted] = useState(true);
   const [playbackStatus, setPlaybackStatus] = useState(null);
   const navigation = useNavigation();
+
+  const videoRef = useRef(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      // This function is called when the screen comes into focus
+      const restartVideo = async () => {
+        if (videoRef.current) {
+          setMuted(true);
+          await videoRef.current.playAsync(); // Ensure this method exists or use appropriate method to play video
+        }
+      };
+  
+      restartVideo();
+  
+    }, [])
+  );
 
   const handlePlaybackStatusUpdate = (status) => {
     setPlaybackStatus(status);
@@ -32,11 +49,23 @@ const FilmInfoPage = () => {
     return 0;
   };
 
+  const stopVideoAndNavigate = async () => {
+    await videoRef.current?.stopAsync(); // Stop the video
+    navigation.navigate("FSVideoPlayer"); // Then navigate
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Video Player */}
       <View style={styles.videoContainer}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Icon name="arrow-back" size={25} color="#FFF" />
+        </TouchableOpacity>
         <Video
+          ref={videoRef}
           source={require("../../assets/Films/VeracityTrailer.mp4")}
           style={styles.video}
           isMuted={muted}
@@ -73,7 +102,7 @@ const FilmInfoPage = () => {
         <View style={styles.actionContainer}>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigation.navigate("FSVideoPlayer")}
+            onPress={stopVideoAndNavigate}
           >
             <Icon name="play-arrow" size={20} color="#fff" />
             <Text style={styles.buttonText}>Watch Now</Text>
@@ -136,6 +165,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 300,
     position: "relative", // This is important
+  },
+  backButton: {
+    position: "absolute",
+    top: 25,
+    zIndex: 10, // Ensure the button is above other elements
+    padding: 10,
   },
   video: {
     width: "100%",

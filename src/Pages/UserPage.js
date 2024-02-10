@@ -1,26 +1,23 @@
 // src/components/ProfilePage.js
 
 import { useState } from "react";
-import { useUser } from "../Context/UserContext";
+import { useAuth } from "../Context/AuthContext";
+import { useProfiles } from "../Context/ProfilesContext";
 import { useNavigation } from "@react-navigation/native";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import NavBar from "../components/NavBar";
 import profileImage from "../../assets/UserProfilePics/5.png";
 import ProfileSwitchModal from "../components/ProfileSwitchModal";
 
-import styles from '../../styles/pages/ProfilePageStyles';
+import styles from "../../styles/pages/ProfilePageStyles";
 
-const ProfilePage = () => {
+const UserPage = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { currentUser, setCurrentUser, clearCurrentUser, profiles } = useUser();
+  const { currentProfile, setCurrentProfile, profiles } = useProfiles();
+
   const navigation = useNavigation();
+  const { logOut } = useAuth();
 
   // Dummy data for downloads
   const downloads = new Array(5).fill(null).map((_, index) => ({
@@ -31,13 +28,24 @@ const ProfilePage = () => {
   const handleModalClose = () => setModalVisible(false);
 
   const handleProfileSelect = (profile) => {
-    setCurrentUser(profile);
+    setCurrentProfile(profile);
     handleModalClose();
   };
 
   const handleSignOut = () => {
-    clearCurrentUser();
-    navigation.navigate("LoginSignup");
+    logOut()
+      .then(() => {
+        // Sign-out successful.
+        console.log("User signed out");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "LoginSignup" }],
+        });
+      })
+      .catch((error) => {
+        // An error happened.
+        console.error("Sign out error:", error);
+      });
   };
 
   const handleUsernameClick = () => {
@@ -57,14 +65,14 @@ const ProfilePage = () => {
       {/* Profile Header */}
       <View style={styles.profileHeader}>
         <Image
-          source={currentUser?.image || profileImage}
+          source={currentProfile?.image || profileImage}
           style={styles.profilePic}
         />
         <TouchableOpacity
           onPress={handleUsernameClick}
           style={styles.usernameContainer}
         >
-          <Text style={styles.profileName}>{currentUser?.name || "You"}</Text>
+          <Text style={styles.profileName}>{currentProfile?.name || "You"}</Text>
           <Icon name="arrow-drop-down" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -109,4 +117,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default UserPage;

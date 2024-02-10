@@ -1,39 +1,16 @@
 import React from "react";
-import { useUser } from "../Context/UserContext";
+import { useProfiles } from "../Context/ProfilesContext";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
 import styles from '../../styles/pages/UsersPageStyles';
 
-const UsersPage = ({ navigation }) => {
-  const { setCurrentUser } = useUser();
+const ProfilesPage = ({ navigation }) => {
+  const { setCurrentProfile, profiles } = useProfiles();
 
   const selectProfile = (profile) => {
-    setCurrentUser(profile);
+    setCurrentProfile(profile);
     navigation.navigate("Home");
   };
-
-  // Dummy data for user profiles
-  const profiles = [
-    { id: "1", name: "Mom", image: require("../../assets/UserProfilePics/1.png") },
-    { id: "2", name: "Dad", image: require("../../assets/UserProfilePics/2.png") },
-    {
-      id: "3",
-      name: "Bobby",
-      image: require("../../assets/UserProfilePics/3.png"),
-    },
-    {
-      id: "4",
-      name: "Johnny",
-      image: require("../../assets/UserProfilePics/4.png"),
-    },
-    {
-      id: "5",
-      name: "Sarah",
-      image: require("../../assets/UserProfilePics/5.png"),
-    },
-    // Add more profiles as needed
-  ];
 
   return (
     <View style={styles.container}>
@@ -66,4 +43,4 @@ const UsersPage = ({ navigation }) => {
   );
 };
 
-export default UsersPage;
+export default ProfilesPage;

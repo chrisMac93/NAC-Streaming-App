@@ -1,5 +1,6 @@
 // src/components/ProfileSwitchModal.js
 import React from "react";
+import { useProfiles } from "../Context/ProfilesContext";
 import {
   View,
   Text,
@@ -10,14 +11,16 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import styles from '../../styles/components/ProfileSwitchModalStyles';
+import styles from "../../styles/components/ProfileSwitchModalStyles";
 
-const ProfileSwitchModal = ({
-  visible,
-  onClose,
-  profiles,
-  onProfileSelect,
-}) => {
+const ProfileSwitchModal = ({ visible, onClose }) => {
+  const { profiles, setCurrentProfile } = useProfiles();
+
+  const onProfileSelect = (profile) => {
+    setCurrentProfile(profile); // Use setCurrentProfile to set the selected profile
+    onClose(); // Close the modal after selecting a profile
+  };
+
   // Function to render each profile
   const renderProfile = ({ item }) => (
     <View style={styles.profileItem}>

@@ -1,14 +1,14 @@
 import React from "react";
-import { useUser } from "../Context/UserContext";
+import { useProfiles } from "../Context/ProfilesContext"; // Updated import
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import profileImage from '../../assets/UserProfilePics/5.png';
+import profileImage from "../../assets/UserProfilePics/5.png";
 
-import styles from '../../styles/components/NavBarStyles';
+import styles from "../../styles/components/NavBarStyles";
 
 const NavBar = () => {
-  const { currentUser } = useUser();
+  const { currentProfile } = useProfiles(); // Updated to useProfiles and currentProfile
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -49,14 +49,19 @@ const NavBar = () => {
         </Text>
       </TouchableOpacity>
 
-     {/* Profile Button */}
-     <TouchableOpacity
+      {/* Profile Button */}
+      <TouchableOpacity
         style={styles.navItem}
-        onPress={() => navigation.navigate("ProfilePage")}
+        onPress={() => navigation.navigate("UserPage")} // Updated to navigate to "UserPage"
       >
-        <Image source={currentUser?.image ||profileImage} style={styles.profilePic} />
-        <Text style={[styles.navText, { color: getTabColor("ProfilePage") }]}>
-          {currentUser?.name || "You"}
+        <Image
+          source={currentProfile?.image || profileImage}
+          style={styles.profilePic}
+        />
+        <Text style={[styles.navText, { color: getTabColor("UserPage") }]}>
+          {" "}
+          {/* Updated reference */}
+          {currentProfile?.name || "Profile"} {/* Updated text */}
         </Text>
       </TouchableOpacity>
     </View>

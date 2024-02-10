@@ -1,12 +1,12 @@
 // src/context/UserContext.js
 import React, { createContext, useState, useContext } from 'react';
 
-const UserContext = createContext();
+const ProfilesContext = createContext();
 
-export const useUser = () => useContext(UserContext);
+export const useProfiles = () => useContext(ProfilesContext);
 
-export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+export const ProfilesProvider = ({ children }) => {
+  const [currentProfile, setCurrentProfile] = useState(null);
 
   const [profiles, setProfiles] = useState([
     // Define your profiles here
@@ -29,14 +29,14 @@ export const UserProvider = ({ children }) => {
     },
   ]);
 
-  const clearCurrentUser = () => {
+  const clearCurrentProfile = () => {
     // Reset the current user state
-    setCurrentUser(null);
+    setCurrentProfile(null);
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser, clearCurrentUser, profiles, setProfiles }}>
+    <ProfilesContext.Provider value={{ currentProfile, setCurrentProfile, clearCurrentProfile, profiles, setProfiles }}>
       {children}
-    </UserContext.Provider>
+    </ProfilesContext.Provider>
   );
 };
